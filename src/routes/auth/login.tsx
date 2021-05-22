@@ -31,7 +31,6 @@ const Login = (props: any) => {
       variables: { input: data },
       onCompleted: (data: any, errors: any) => {
         if (errors === null) {
-          setUser(data.login.payload);
           window.localStorage.setItem("token", data.login.token);
           history.push("/questions");
         } else {
