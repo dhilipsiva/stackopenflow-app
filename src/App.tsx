@@ -1,6 +1,6 @@
-import Loader from "utils/loader";
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Loader from "utils/loader";
 
 const AuthRoutes = lazy(() => import("routes/auth/routes"));
 const Navigation = lazy(() => import("components/navigation"));

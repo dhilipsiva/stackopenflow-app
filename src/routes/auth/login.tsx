@@ -8,6 +8,7 @@ const mutation = graphql`
   mutation loginMutation($input: ObtainJSONWebTokenInput!) {
     login(input: $input) {
       payload
+      token
     }
   }
 `;
@@ -25,13 +26,14 @@ const Login = (props: any) => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>();
-
   const onSubmit: SubmitHandler<LoginForm> = (data) => {
     commit({
       variables: { input: data },
       onCompleted: (data: any, errors: any) => {
         if (errors === null) {
-          history.push("/");
+          setUser(data.login.payload);
+          window.localStorage.setItem("token", data.login.token);
+          history.push("/questions");
         } else {
           errors.map((error: any) => alert(error.message));
         }

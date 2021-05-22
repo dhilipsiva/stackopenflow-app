@@ -68,7 +68,9 @@ const Register = (props: any) => {
         />
         <p>{errors.password}</p>
       </div>
-      <button type="submit">Register</button>
+      <button type="submit" disabled={isInFLight}>
+        Register
+      </button>
       <Link to={"/auth/login"}>Login?</Link>
     </form>
   );
