@@ -1,6 +1,5 @@
 import graphql from "babel-plugin-relay/macro";
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { useStoreActions } from "easy-peasy";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -20,7 +19,6 @@ const mutation = graphql`
 
 const NewAnswerModal = ({ show, handleClose, questionId }) => {
   const [commit, isInFlight] = useMutation(mutation);
-  const history = useHistory();
   const refresh = useStoreActions((actions) => actions.refresh);
   const {
     handleSubmit,

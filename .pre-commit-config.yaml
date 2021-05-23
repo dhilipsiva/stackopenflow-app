@@ -14,4 +14,5 @@ repos:
           (?x)(
             ^.*\b(__generated__)\b.*$|
             ^schema.json$
+            ^src/CHOICES.js$
           )

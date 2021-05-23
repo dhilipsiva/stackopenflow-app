@@ -9,6 +9,7 @@ import Card from "react-bootstrap/Card";
 import { useStoreState } from "easy-peasy";
 import Comments from "routes/questions/comments";
 import NewAnswerModal from "components/new-answer-modal";
+import { Upvote, Downvote } from "routes/questions/vote";
 
 const { useLazyLoadQuery } = require("react-relay");
 
@@ -86,13 +87,16 @@ function Detail() {
                   objectId={data.question.id}
                   contentType={questionContentType}
                 />
-                <Button variant="outline-success">
-                  <Badge variant="dark">{data.question.voteUp}</Badge> Upvote
-                </Button>{" "}
-                <Button variant="outline-danger">
-                  <Badge variant="dark">{data.question.voteDown}</Badge> Down
-                  Vote
-                </Button>
+                <Upvote
+                  voteCount={data.question.voteDown}
+                  objectId={data.question.id}
+                  contentType={questionContentType}
+                />{" "}
+                <Downvote
+                  voteCount={data.question.voteDown}
+                  objectId={data.question.id}
+                  contentType={questionContentType}
+                />
               </Card.Body>
             </Card>
           </Col>
@@ -116,14 +120,16 @@ function Detail() {
                     objectId={answerEdge.node.id}
                     contentType={answerContentType}
                   />
-                  <Button variant="outline-success">
-                    <Badge variant="dark">{answerEdge.node.voteUp}</Badge>{" "}
-                    Upvote
-                  </Button>{" "}
-                  <Button variant="outline-danger">
-                    <Badge variant="dark">{answerEdge.node.voteDown}</Badge>{" "}
-                    Down Vote
-                  </Button>
+                  <Upvote
+                    voteCount={answerEdge.node.voteUp}
+                    objectId={answerEdge.node.id}
+                    contentType={answerContentType}
+                  />{" "}
+                  <Downvote
+                    voteCount={answerEdge.node.voteDown}
+                    objectId={answerEdge.node.id}
+                    contentType={answerContentType}
+                  />
                 </Card.Body>
               </Card>
             </Col>

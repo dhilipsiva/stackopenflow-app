@@ -10,6 +10,7 @@ import { useStoreState, useStoreActions } from "easy-peasy";
 import { useMutation } from "react-relay";
 import { useForm, Controller } from "react-hook-form";
 import Form from "react-bootstrap/Form";
+import { Upvote, Downvote } from "routes/questions/vote";
 
 const { useLazyLoadQuery } = require("react-relay");
 const MODAL_LIST = "list",
@@ -134,6 +135,9 @@ function CommentsModal({
   contentType,
   setActiveModal,
 }) {
+  const commentContentType = useStoreState((store) =>
+    store.getContentTypeByModel("qna", "comment")
+  );
   const refreshCounter = useStoreState((state) => state.refreshCounter);
   const data = useLazyLoadQuery(
     query,
@@ -161,12 +165,16 @@ function CommentsModal({
                     by {comment.user.username}
                   </Card.Title>
                   <Card.Text>{comment.text}</Card.Text>
-                  <Button variant="outline-success">
-                    <Badge variant="dark">{comment.voteUp}</Badge> Upvote
-                  </Button>{" "}
-                  <Button variant="outline-danger">
-                    <Badge variant="dark">{comment.voteDown}</Badge> Down Vote
-                  </Button>
+                  <Upvote
+                    voteCount={comment.voteUp}
+                    objectId={comment.id}
+                    contentType={commentContentType}
+                  />{" "}
+                  <Downvote
+                    voteCount={comment.voteDown}
+                    objectId={comment.id}
+                    contentType={commentContentType}
+                  />
                 </Card.Body>
               </Card>
             </Col>
@@ -186,10 +194,6 @@ function CommentsModal({
 }
 
 function Comments({ objectId, contentType }) {
-  const commentContentType = useStoreState((store) =>
-    store.getContentTypeByModel("qna", "comment")
-  );
-
   const [show, setShow] = useState(false);
   const [activeModal, setActiveModal] = useState(MODAL_LIST);
   const handleClose = () => setShow(false);
