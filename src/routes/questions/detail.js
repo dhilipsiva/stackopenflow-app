@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import graphql from "babel-plugin-relay/macro";
-import { Link, useRouteMatch, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const { useLazyLoadQuery } = require("react-relay");
 
@@ -33,7 +33,7 @@ function Detail() {
         <p>{data.question.text}</p>
         <ul>
           {data.question.answers.edges.map((answerEdge) => (
-            <div>
+            <div key={answerEdge.node.id}>
               <li>{answerEdge.node.text}</li>
             </div>
           ))}

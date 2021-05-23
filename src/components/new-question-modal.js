@@ -1,22 +1,12 @@
 import graphql from "babel-plugin-relay/macro";
-import React, { Suspense, useEffect, lazy, useState } from "react";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-import Loader from "utils/loader";
-import { useStoreActions, useStoreState } from "easy-peasy";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useStoreActions } from "easy-peasy";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { LinkContainer } from "react-router-bootstrap";
 import { useMutation } from "react-relay";
 import Form from "react-bootstrap/Form";
 import { useForm, Controller } from "react-hook-form";
-
-const { useLazyLoadQuery } = require("react-relay");
-const QuestionRoutes = lazy(() => import("routes/questions/routes"));
 
 const mutation = graphql`
   mutation newQuestionModalMutation($input: CreateQuestionInput!) {
@@ -33,7 +23,6 @@ const NewQuestionModal = ({ show, handleClose }) => {
   const history = useHistory();
   const refresh = useStoreActions((actions) => actions.refresh);
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
@@ -64,7 +53,7 @@ const NewQuestionModal = ({ show, handleClose }) => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
           {/*<img
-        class="mb-4"
+        className="mb-4"
         src="/docs/4.6/assets/brand/bootstrap-solid.svg"
         alt=""
         width="72"

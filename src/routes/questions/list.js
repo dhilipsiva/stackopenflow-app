@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import graphql from "babel-plugin-relay/macro";
 import { Link, useRouteMatch } from "react-router-dom";
 import Table from "react-bootstrap/Table";

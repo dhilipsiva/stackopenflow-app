@@ -1,19 +1,15 @@
 import graphql from "babel-plugin-relay/macro";
 import React, { Suspense, useEffect, lazy, useState } from "react";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import Loader from "utils/loader";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
-import { useMutation } from "react-relay";
-import Form from "react-bootstrap/Form";
-import { useForm, Controller } from "react-hook-form";
 import NewQuestionModal from "components/new-question-modal";
 
 const { useLazyLoadQuery } = require("react-relay");

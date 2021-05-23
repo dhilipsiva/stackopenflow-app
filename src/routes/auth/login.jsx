@@ -1,6 +1,6 @@
 import React from "react";
 import graphql from "babel-plugin-relay/macro";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "react-relay";
 import Button from "react-bootstrap/Button";
@@ -20,7 +20,6 @@ const Login = (props) => {
   const history = useHistory();
   const [commit, isInFlight] = useMutation(mutation);
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
@@ -44,13 +43,13 @@ const Login = (props) => {
   return (
     <Form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
       {/*<img
-        class="mb-4"
+        className="mb-4"
         src="/docs/4.6/assets/brand/bootstrap-solid.svg"
         alt=""
         width="72"
         height="72"
       />*/}
-      <h1 class="h3 mb-3 font-weight-normal">Please login to continue</h1>
+      <h1 className="h3 mb-3 font-weight-normal">Please login to continue</h1>
       <Form.Group className={errors.username ? "error" : ""}>
         <Form.Label htmlFor="username" srOnly>
           username
