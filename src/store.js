@@ -1,4 +1,5 @@
 import { action, computed } from "easy-peasy";
+
 const storeModel = {
   user: null,
   contentTypes: [],
@@ -22,4 +23,5 @@ const storeModel = {
       )
   ),
 };
+
 export default storeModel;
