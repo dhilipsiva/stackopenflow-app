@@ -14,6 +14,9 @@ const query = graphql`
       title
       voteCount
       commentCount
+      user {
+        username
+      }
     }
   }
 `;
@@ -30,6 +33,7 @@ function List() {
           <tr>
             <th>Votes</th>
             <th>Title</th>
+            <th>User</th>
             <th>Comments</th>
           </tr>
         </thead>
@@ -42,6 +46,7 @@ function List() {
                 <td>
                   <Link to={`${url}/${question.id}`}>{question.title}</Link>
                 </td>
+                <td>{question.user.username}</td>
                 <td>{question.commentCount}</td>
               </tr>
             ))}

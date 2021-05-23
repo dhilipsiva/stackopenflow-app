@@ -52,12 +52,14 @@ const Navigation = () => {
       <Row>
         <Col>
           <Navbar bg="dark" variant="dark" expand="lg">
-            <Navbar.Brand href="#home">StackOpenflow</Navbar.Brand>
+            <LinkContainer to="/questions">
+              <Navbar.Brand>StackOpenflow</Navbar.Brand>
+            </LinkContainer>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
                 <LinkContainer to="/questions">
-                  <Nav.Link href="#home">Questions</Nav.Link>
+                  <Navbar.Text>Questions</Navbar.Text>
                 </LinkContainer>
               </Nav>
             </Navbar.Collapse>
