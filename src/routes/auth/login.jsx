@@ -1,9 +1,8 @@
 import React from "react";
 import graphql from "babel-plugin-relay/macro";
 import { Link, useHistory } from "react-router-dom";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useMutation } from "react-relay";
-
 const mutation = graphql`
   mutation loginMutation($input: ObtainJSONWebTokenInput!) {
     login(input: $input) {
@@ -12,37 +11,30 @@ const mutation = graphql`
     }
   }
 `;
-
-type LoginForm = {
-  username: string;
-  password: string;
-};
-
-const Login = (props: any) => {
+const Login = (props) => {
   const history = useHistory();
   const [commit, isInFlight] = useMutation(mutation);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginForm>();
-  const onSubmit: SubmitHandler<LoginForm> = (data) => {
+  } = useForm();
+  const onSubmit = (data) => {
     commit({
       variables: { input: data },
-      onCompleted: (data: any, errors: any) => {
+      onCompleted: (data, errors) => {
         if (errors === null) {
           window.localStorage.setItem("token", data.login.token);
           history.push("/questions");
         } else {
-          errors.map((error: any) => alert(error.message));
+          errors.map((error) => alert(error.message));
         }
       },
-      onError: (errors: any) => {
+      onError: (errors) => {
         alert(errors);
       },
     });
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Login</h1>
@@ -72,5 +64,4 @@ const Login = (props: any) => {
     </form>
   );
 };
-
 export default Login;

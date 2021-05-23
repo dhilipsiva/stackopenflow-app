@@ -1,10 +1,8 @@
 import Loader from "utils/loader";
 import React, { lazy, Suspense } from "react";
 import { Switch, Route, useRouteMatch, Redirect } from "react-router-dom";
-
 const Login = lazy(() => import("routes/auth/login"));
 const Register = lazy(() => import("routes/auth/register"));
-
 const Routes = () => {
   let { path, url } = useRouteMatch();
   return (
@@ -21,5 +19,4 @@ const Routes = () => {
     </Suspense>
   );
 };
-
 export default Routes;

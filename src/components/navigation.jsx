@@ -1,15 +1,11 @@
 import graphql from "babel-plugin-relay/macro";
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-
 import Loader from "utils/loader";
-import { useStoreActions, useStoreState } from "hooks";
-
+import { useStoreActions } from "easy-peasy";
 const { useLazyLoadQuery } = require("react-relay");
-
 // const QuestionRoutes = lazy(() => import("routes/questions/routes"));
 // const SettingsRoutes = lazy(() => import("routes/settings/routes"));
-
 const query = graphql`
   query navigationQuery {
     me {
@@ -23,20 +19,15 @@ const query = graphql`
     }
   }
 `;
-
 const Navigation = () => {
   const data = useLazyLoadQuery(query);
   const setUser = useStoreActions((actions) => actions.setUser);
   const setContentTypes = useStoreActions((actions) => actions.setContentTypes);
-  // const getContentTypeById = useStoreState((state) => state.getContentTypeById);
-  // debugger;
 
   useEffect(() => {
     setUser(data.me);
     setContentTypes(data.contentTypes);
-  }, []);
-  // const contType = getContentTypeById(7);
-  // debugger;
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
@@ -52,5 +43,4 @@ const Navigation = () => {
     </div>
   );
 };
-
 export default Navigation;

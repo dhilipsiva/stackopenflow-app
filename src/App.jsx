@@ -1,10 +1,8 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Loader from "utils/loader";
-
 const AuthRoutes = lazy(() => import("routes/auth/routes"));
 const Navigation = lazy(() => import("components/navigation"));
-
 const App = () => {
   return (
     <BrowserRouter>
@@ -17,5 +15,4 @@ const App = () => {
     </BrowserRouter>
   );
 };
-
 export default App;

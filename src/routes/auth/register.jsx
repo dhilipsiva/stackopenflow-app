@@ -1,9 +1,8 @@
 import React from "react";
 import graphql from "babel-plugin-relay/macro";
 import { Link, useHistory } from "react-router-dom";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useMutation } from "react-relay";
-
 const mutation = graphql`
   mutation registerMutation($input: RegisterInput!) {
     register(input: $input) {
@@ -14,38 +13,30 @@ const mutation = graphql`
     }
   }
 `;
-
-type RegisterForm = {
-  username: string;
-  password: string;
-};
-
-const Register = (props: any) => {
+const Register = (props) => {
   const history = useHistory();
   const [commit, isInFLight] = useMutation(mutation);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterForm>();
-
-  const onSubmit: SubmitHandler<RegisterForm> = (data) => {
+  } = useForm();
+  const onSubmit = (data) => {
     commit({
       variables: { input: data },
-      onCompleted: (data: any, errors: any) => {
+      onCompleted: (data, errors) => {
         if (errors === null) {
           alert("Sucessfully registered. Please login now!");
           history.push("/auth/login");
         } else {
-          errors.map((error: any) => alert(error.message));
+          errors.map((error) => alert(error.message));
         }
       },
-      onError: (errors: any) => {
+      onError: (errors) => {
         alert(errors);
       },
     });
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Register</h1>
@@ -75,5 +66,4 @@ const Register = (props: any) => {
     </form>
   );
 };
-
 export default Register;

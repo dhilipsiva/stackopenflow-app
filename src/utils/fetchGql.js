@@ -9,8 +9,6 @@ async function fetchGql(query, variables) {
     headers: headers,
     body: JSON.stringify({ query, variables }),
   });
-
   return await response.json();
 }
-
 export default fetchGql;
