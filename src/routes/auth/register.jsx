@@ -1,8 +1,12 @@
 import React from "react";
 import graphql from "babel-plugin-relay/macro";
 import { Link, useHistory } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "react-relay";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { LinkContainer } from "react-router-bootstrap";
+
 const mutation = graphql`
   mutation registerMutation($input: RegisterInput!) {
     register(input: $input) {
@@ -13,12 +17,14 @@ const mutation = graphql`
     }
   }
 `;
+
 const Register = (props) => {
   const history = useHistory();
-  const [commit, isInFLight] = useMutation(mutation);
+  const [commit, isInFlight] = useMutation(mutation);
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -38,32 +44,70 @@ const Register = (props) => {
     });
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>Register</h1>
-      <p>Please Enter your credentials</p>
-      <div className={errors.username ? "error" : ""}>
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          placeholder="dhilipsiva@pm.me"
-          {...register("username", { required: true })}
+    <Form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
+      {/*<img
+        class="mb-4"
+        src="/docs/4.6/assets/brand/bootstrap-solid.svg"
+        alt=""
+        width="72"
+        height="72"
+      />*/}
+      <h1 class="h3 mb-3 font-weight-normal">Please register to continue</h1>
+      <Form.Group className={errors.username ? "error" : ""}>
+        <Form.Label htmlFor="username" srOnly>
+          username
+        </Form.Label>
+        <Controller
+          name="username"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Form.Control
+              type="text"
+              className="mb-2"
+              id="username"
+              placeholder="username"
+              {...field}
+            />
+          )}
         />
         <p>{errors.username}</p>
-      </div>
-      <div className={errors.password ? "error" : ""}>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          placeholder="password"
-          {...register("password", { required: true })}
+      </Form.Group>{" "}
+      <Form.Group className={errors.password ? "error" : ""}>
+        <Form.Label htmlFor="password" srOnly>
+          password
+        </Form.Label>
+        <Controller
+          name="password"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Form.Control
+              type="password"
+              className="mb-2"
+              id="password"
+              placeholder="password"
+              {...field}
+            />
+          )}
         />
         <p>{errors.password}</p>
-      </div>
-      <button type="submit" disabled={isInFLight}>
+      </Form.Group>
+      <Button
+        variant="primary"
+        size="lg"
+        type="submit"
+        disabled={isInFlight}
+        block
+      >
         Register
-      </button>
-      <Link to={"/auth/login"}>Login?</Link>
-    </form>
+      </Button>
+      <LinkContainer to="/auth/login">
+        <Button variant="secondary" size="sm" disabled={isInFlight} block>
+          Login?
+        </Button>
+      </LinkContainer>
+    </Form>
   );
 };
 export default Register;
