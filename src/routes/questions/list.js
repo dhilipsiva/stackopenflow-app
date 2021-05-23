@@ -23,7 +23,11 @@ const query = graphql`
 
 function List() {
   const refreshCounter = useStoreState((state) => state.refreshCounter);
-  const data = useLazyLoadQuery(query, { refreshCounter });
+  const data = useLazyLoadQuery(
+    query,
+    { refreshCounter },
+    { fetchPolicy: "network-only" }
+  );
   const { url } = useRouteMatch();
   return (
     <>

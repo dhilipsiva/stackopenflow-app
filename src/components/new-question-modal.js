@@ -52,13 +52,6 @@ const NewQuestionModal = ({ show, handleClose }) => {
       </Modal.Header>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
-          {/*<img
-        className="mb-4"
-        src="/docs/4.6/assets/brand/bootstrap-solid.svg"
-        alt=""
-        width="72"
-        height="72"
-      />*/}
           <Form.Group className={errors.title ? "error" : ""}>
             <Form.Label htmlFor="question-title" srOnly>
               Question Title

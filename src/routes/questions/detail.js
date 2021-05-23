@@ -45,7 +45,12 @@ const query = graphql`
 function Detail() {
   const refreshCounter = useStoreState((state) => state.refreshCounter);
   let { questionId } = useParams();
-  const data = useLazyLoadQuery(query, { id: questionId, refreshCounter });
+  const data = useLazyLoadQuery(
+    query,
+    { id: questionId, refreshCounter },
+
+    { fetchPolicy: "network-only" }
+  );
   const questionContentType = useStoreState((store) =>
     store.getContentTypeByModel("qna", "question")
   );
