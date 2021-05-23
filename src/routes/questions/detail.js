@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import graphql from "babel-plugin-relay/macro";
 import { useParams } from "react-router-dom";
 import Row from "react-bootstrap/Row";
@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { useStoreState } from "easy-peasy";
 import Comments from "routes/questions/comments";
+import NewAnswerModal from "components/new-answer-modal";
 
 const { useLazyLoadQuery } = require("react-relay");
 
@@ -44,11 +45,14 @@ const query = graphql`
 `;
 function Detail() {
   const refreshCounter = useStoreState((state) => state.refreshCounter);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   let { questionId } = useParams();
   const data = useLazyLoadQuery(
     query,
     { id: questionId, refreshCounter },
-
     { fetchPolicy: "network-only" }
   );
   const questionContentType = useStoreState((store) =>
@@ -70,7 +74,14 @@ function Detail() {
                   {data.question.title}
                 </Card.Title>
                 <Card.Text>{data.question.text}</Card.Text>
-                <Button variant="primary">New Answer</Button>{" "}
+                <Button variant="primary" onClick={handleShow}>
+                  New Answer
+                </Button>{" "}
+                <NewAnswerModal
+                  show={show}
+                  handleClose={handleClose}
+                  questionId={questionId}
+                />
                 <Comments
                   objectId={data.question.id}
                   contentType={questionContentType}
