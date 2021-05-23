@@ -109,13 +109,7 @@ const NewQuestionModal = ({ show, handleClose }) => {
           >
             Close
           </Button>
-          <Button
-            variant="primary"
-            size="lg"
-            type="submit"
-            disabled={isInFlight}
-            block
-          >
+          <Button variant="primary" type="submit" disabled={isInFlight}>
             Submit
           </Button>
         </Modal.Footer>
