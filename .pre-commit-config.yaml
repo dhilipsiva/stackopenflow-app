@@ -10,4 +10,8 @@ repos:
     rev: v2.3.0
     hooks:
       - id: prettier
-        exclude: ^.*\b(__generated__)\b.*$
+        exclude: |
+          (?x)(
+            ^.*\b(__generated__)\b.*$|
+            ^schema.json$
+          )
