@@ -7,6 +7,7 @@ import Badge from "react-bootstrap/Badge";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { useStoreState } from "easy-peasy";
+import Comments from "routes/questions/comments";
 
 const { useLazyLoadQuery } = require("react-relay");
 
@@ -45,6 +46,12 @@ function Detail() {
   const refreshCounter = useStoreState((state) => state.refreshCounter);
   let { questionId } = useParams();
   const data = useLazyLoadQuery(query, { id: questionId, refreshCounter });
+  const questionContentType = useStoreState((store) =>
+    store.getContentTypeByModel("qna", "question")
+  );
+  const answerContentType = useStoreState((store) =>
+    store.getContentTypeByModel("qna", "answer")
+  );
 
   if (data && data.question) {
     return (
@@ -59,6 +66,10 @@ function Detail() {
                 </Card.Title>
                 <Card.Text>{data.question.text}</Card.Text>
                 <Button variant="primary">New Answer</Button>{" "}
+                <Comments
+                  objectId={data.question.id}
+                  contentType={questionContentType}
+                />
                 <Button variant="outline-success">
                   <Badge variant="dark">{data.question.voteUp}</Badge> Upvote
                 </Button>{" "}
@@ -85,10 +96,10 @@ function Detail() {
                     Answer by {answerEdge.node.user.username}
                   </Card.Title>
                   <Card.Text>{answerEdge.node.text}</Card.Text>
-                  <Button variant="primary">
-                    <Badge variant="dark">{answerEdge.node.commentCount}</Badge>{" "}
-                    New Comment
-                  </Button>{" "}
+                  <Comments
+                    objectId={answerEdge.node.id}
+                    contentType={answerContentType}
+                  />
                   <Button variant="outline-success">
                     <Badge variant="dark">{answerEdge.node.voteUp}</Badge>{" "}
                     Upvote
