@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import graphql from "babel-plugin-relay/macro";
 import { Link, useRouteMatch } from "react-router-dom";
+import Table from "react-bootstrap/Table";
 
 const { useLazyLoadQuery } = require("react-relay");
 
@@ -20,15 +21,31 @@ function List() {
   const data = useLazyLoadQuery(query);
   const { url } = useRouteMatch();
   return (
-    <ul>
-      {data &&
-        data.questions &&
-        data.questions.map((question) => (
-          <li>
-            <Link to={`${url}/${question.id}`}>{question.title}</Link>
-          </li>
-        ))}
-    </ul>
+    <>
+      <h3>Questions</h3>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Votes</th>
+            <th>Title</th>
+            <th>Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data &&
+            data.questions &&
+            data.questions.map((question) => (
+              <tr>
+                <td>{question.voteCount}</td>
+                <td>
+                  <Link to={`${url}/${question.id}`}>{question.title}</Link>
+                </td>
+                <td>{question.commentCount}</td>
+              </tr>
+            ))}
+        </tbody>
+      </Table>
+    </>
   );
 }
 
